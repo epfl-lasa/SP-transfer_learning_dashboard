@@ -1,3 +1,10 @@
+<script lang="ts">
+    import { getStats } from "$lib/data";
+
+    const stats = getStats();
+</script>
+
+
 <svelte:head>
     <title>Transfer Learning in Robotics — Dashboard</title>
 </svelte:head>
@@ -13,15 +20,15 @@
     <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="rounded-lg border bg-card p-6 shadow-sm">
             <p class="text-sm text-muted-foreground">Papers Analyzed</p>
-            <p class="text-3xl font-bold mt-1">—</p>
+            <p class="text-3xl font-bold mt-1">{stats.totalPapers}</p>
         </div>
         <div class="rounded-lg border bg-card p-6 shadow-sm">
             <p class="text-sm text-muted-foreground">With Real Robot Experiments</p>
-            <p class="text-3xl font-bold mt-1">—</p>
+            <p class="text-3xl font-bold mt-1">{stats.withRealRobot}</p>
         </div>
         <div class="rounded-lg border bg-card p-6 shadow-sm">
             <p class="text-sm text-muted-foreground">Transfer Domains Tracked</p>
-            <p class="text-3xl font-bold mt-1">—</p>
+            <p class="text-3xl font-bold mt-1">{stats.uniqueDomains}</p>
         </div>
     </div>
 </main>
