@@ -2,9 +2,10 @@
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "$lib/components/ui/collapsible";
 	import {
 		SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction,
-		SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton
+		SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton, SidebarMenuBadge
 	} from "$lib/components/ui/sidebar";
 	import { ChevronRight } from "@lucide/svelte";
+	import type { Component } from "svelte";
 
 	let {
 		items,
@@ -12,10 +13,9 @@
 		items: {
 			title: string;
 			url: string;
-			// This should be `Component` after @lucide/svelte updates types
-			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			icon: any;
+			icon: Component;
 			isActive?: boolean;
+			disabled?: boolean;
 			items?: {
 				title: string;
 				url: string;
@@ -28,17 +28,29 @@
 	<SidebarGroupLabel>Platform</SidebarGroupLabel>
 	<SidebarMenu>
 		{#each items as mainItem (mainItem.title)}
+			{@const Icon = mainItem.icon}
 			<Collapsible open={mainItem.isActive}>
 				{#snippet child({ props })}
 					<SidebarMenuItem {...props}>
-						<SidebarMenuButton tooltipContent={mainItem.title}>
+						<SidebarMenuButton
+							tooltipContent={mainItem.title}
+							aria-disabled={mainItem.disabled ? "true" : undefined}
+							class={mainItem.disabled ? "text-sidebar-foreground/70" : ""}
+						>
 							{#snippet child({ props })}
-								<a href={mainItem.url} {...props}>
-									<mainItem.icon />
+								<a
+									{...props}
+									href={mainItem.disabled ? undefined : mainItem.url}
+									tabindex={mainItem.disabled ? -1 : undefined}
+								>
+									<Icon />
 									<span>{mainItem.title}</span>
 								</a>
 							{/snippet}
 						</SidebarMenuButton>
+						{#if mainItem.disabled}
+							<SidebarMenuBadge class="text-sidebar-foreground/60">Soon</SidebarMenuBadge>
+						{/if}
 						{#if mainItem.items?.length}
 							<CollapsibleTrigger>
 								{#snippet child({ props })}

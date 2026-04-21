@@ -1,99 +1,95 @@
 <script lang="ts" module>
 	import {
-		BookOpen, Bot, ChartPie, Frame, LifeBuoy, Map, Send, Settings2, SquareTerminal
+		ArrowLeftRight,
+		BookOpen, Bot, ChartPie, Frame, LayoutDashboard, LifeBuoy, Map, Search, Send,
+		TrendingUp, Workflow
 	} from "@lucide/svelte";
 
 	const data = {
 		user: {
-			name: "shadcn",
+			name: "Daniel",
 			email: "m@example.com",
 			avatar: "/avatars/shadcn.jpg",
 		},
 		navMain: [
 			{
-				title: "Playground",
+				title: "Overview",
 				url: "#",
-				icon: SquareTerminal,
-				isActive: true,
-				items: [
-					{
-						title: "History",
-						url: "#",
-					},
-					{
-						title: "Starred",
-						url: "#",
-					},
-					{
-						title: "Settings",
-						url: "#",
-					},
-				],
+				icon: LayoutDashboard,
 			},
 			{
-				title: "Models",
+				title: "Explore Papers",
+				url: "#",
+				icon: Search,
+			},
+			{
+				title: "Venues",
 				url: "#",
 				icon: Bot,
 				items: [
 					{
-						title: "Genesis",
+						title: "CoRL",
 						url: "#",
 					},
 					{
-						title: "Explorer",
+						title: "arXiv",
 						url: "#",
 					},
 					{
-						title: "Quantum",
+						title: "Others",
 						url: "#",
 					},
 				],
 			},
 			{
-				title: "Documentation",
+				title: "Taxonomy",
 				url: "#",
 				icon: BookOpen,
 				items: [
 					{
-						title: "Introduction",
+						title: "Introduction to TL",
 						url: "#",
 					},
 					{
-						title: "Get Started",
+						title: "Transfer Types",
 						url: "#",
 					},
 					{
-						title: "Tutorials",
+						title: "Transfer Domains",
 						url: "#",
 					},
 					{
-						title: "Changelog",
+						title: "Transfer Modes",
+						url: "#",
+					},
+					{
+						title: "Methods and Applications",
+						url: "#",
+					},
+					{
+						title: "Quality Assessment",
 						url: "#",
 					},
 				],
 			},
 			{
-				title: "Settings",
+				title: "Trends",
 				url: "#",
-				icon: Settings2,
-				items: [
-					{
-						title: "General",
-						url: "#",
-					},
-					{
-						title: "Team",
-						url: "#",
-					},
-					{
-						title: "Billing",
-						url: "#",
-					},
-					{
-						title: "Limits",
-						url: "#",
-					},
-				],
+				icon: TrendingUp,
+			},
+			{
+				title: "Compare",
+				url: "#",
+				icon: ArrowLeftRight,
+				isActive: false,
+				disabled: true,
+			},
+			{
+				title: "Pipeline",
+				url: "#",
+				icon: Workflow,
+				isActive: false,
+				disabled: true,
 			},
 		],
 		navSecondary: [
@@ -130,8 +126,6 @@
 
 <script lang="ts">
 	import NavMain from "./nav-main.svelte";
-	import NavProjects from "./nav-projects.svelte";
-	import NavSecondary from "./nav-secondary.svelte";
 	import NavUser from "./nav-user.svelte";
 	import {
 		Sidebar,
@@ -171,8 +165,10 @@
 	</SidebarHeader>
 	<SidebarContent>
 		<NavMain items={data.navMain} />
+		<!--
 		<NavProjects projects={data.projects} />
 		<NavSecondary items={data.navSecondary} class="mt-auto" />
+		-->
 	</SidebarContent>
 	<SidebarFooter>
 		<NavUser user={data.user} />
