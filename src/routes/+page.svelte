@@ -16,7 +16,6 @@
     <p class="mt-2 text-muted-foreground">
         Interactive dashboard for exploring transfer learning trends across robotics papers.
     </p>
-
     <div class="mt-8 grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="rounded-lg border bg-card p-6 shadow-sm">
             <p class="text-sm text-muted-foreground">Papers Analyzed</p>
