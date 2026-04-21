@@ -1,13 +1,7 @@
 <script lang="ts" module>
-	import BookOpenIcon from "@lucide/svelte/icons/book-open";
-	import BotIcon from "@lucide/svelte/icons/bot";
-	import ChartPieIcon from "@lucide/svelte/icons/chart-pie";
-	import FrameIcon from "@lucide/svelte/icons/frame";
-	import LifeBuoyIcon from "@lucide/svelte/icons/life-buoy";
-	import MapIcon from "@lucide/svelte/icons/map";
-	import SendIcon from "@lucide/svelte/icons/send";
-	import Settings2Icon from "@lucide/svelte/icons/settings-2";
-	import SquareTerminalIcon from "@lucide/svelte/icons/square-terminal";
+	import {
+		BookOpen, Bot, ChartPie, Frame, LifeBuoy, Map, Send, Settings2, SquareTerminal
+	} from "@lucide/svelte";
 
 	const data = {
 		user: {
@@ -19,7 +13,7 @@
 			{
 				title: "Playground",
 				url: "#",
-				icon: SquareTerminalIcon,
+				icon: SquareTerminal,
 				isActive: true,
 				items: [
 					{
@@ -39,7 +33,7 @@
 			{
 				title: "Models",
 				url: "#",
-				icon: BotIcon,
+				icon: Bot,
 				items: [
 					{
 						title: "Genesis",
@@ -58,7 +52,7 @@
 			{
 				title: "Documentation",
 				url: "#",
-				icon: BookOpenIcon,
+				icon: BookOpen,
 				items: [
 					{
 						title: "Introduction",
@@ -81,7 +75,7 @@
 			{
 				title: "Settings",
 				url: "#",
-				icon: Settings2Icon,
+				icon: Settings2,
 				items: [
 					{
 						title: "General",
@@ -106,29 +100,29 @@
 			{
 				title: "Support",
 				url: "#",
-				icon: LifeBuoyIcon,
+				icon: LifeBuoy,
 			},
 			{
 				title: "Feedback",
 				url: "#",
-				icon: SendIcon,
+				icon: Send,
 			},
 		],
 		projects: [
 			{
 				name: "Design Engineering",
 				url: "#",
-				icon: FrameIcon,
+				icon: Frame,
 			},
 			{
 				name: "Sales & Marketing",
 				url: "#",
-				icon: ChartPieIcon,
+				icon: ChartPie,
 			},
 			{
 				name: "Travel",
 				url: "#",
-				icon: MapIcon,
+				icon: Map,
 			},
 		],
 	};
@@ -139,24 +133,31 @@
 	import NavProjects from "./nav-projects.svelte";
 	import NavSecondary from "./nav-secondary.svelte";
 	import NavUser from "./nav-user.svelte";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import CommandIcon from "@lucide/svelte/icons/command";
+	import {
+		Sidebar,
+		SidebarContent, SidebarFooter,
+		SidebarHeader,
+		SidebarMenu,
+		SidebarMenuButton,
+		SidebarMenuItem
+	} from "$lib/components/ui/sidebar";
+	import { Command } from "@lucide/svelte";
 	import type { ComponentProps } from "svelte";
 
-	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar.Root> = $props();
+	let { ref = $bindable(null), ...restProps }: ComponentProps<typeof Sidebar> = $props();
 </script>
 
-<Sidebar.Root bind:ref variant="inset" {...restProps}>
-	<Sidebar.Header>
-		<Sidebar.Menu>
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton size="lg">
+<Sidebar bind:ref variant="inset" {...restProps}>
+	<SidebarHeader>
+		<SidebarMenu>
+			<SidebarMenuItem>
+				<SidebarMenuButton size="lg">
 					{#snippet child({ props })}
 						<a href="##" {...props}>
 							<div
 								class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
 							>
-								<CommandIcon class="size-4" />
+								<Command class="size-4" />
 							</div>
 							<div class="grid flex-1 text-start text-sm leading-tight">
 								<span class="truncate font-medium">Acme Inc</span>
@@ -164,16 +165,16 @@
 							</div>
 						</a>
 					{/snippet}
-				</Sidebar.MenuButton>
-			</Sidebar.MenuItem>
-		</Sidebar.Menu>
-	</Sidebar.Header>
-	<Sidebar.Content>
+				</SidebarMenuButton>
+			</SidebarMenuItem>
+		</SidebarMenu>
+	</SidebarHeader>
+	<SidebarContent>
 		<NavMain items={data.navMain} />
 		<NavProjects projects={data.projects} />
 		<NavSecondary items={data.navSecondary} class="mt-auto" />
-	</Sidebar.Content>
-	<Sidebar.Footer>
+	</SidebarContent>
+	<SidebarFooter>
 		<NavUser user={data.user} />
-	</Sidebar.Footer>
-</Sidebar.Root>
+	</SidebarFooter>
+</Sidebar>

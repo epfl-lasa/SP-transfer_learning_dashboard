@@ -1,11 +1,19 @@
 <script lang="ts">
-	import * as DropdownMenu from "$lib/components/ui/dropdown-menu/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+	import {
+		DropdownMenu,
+		DropdownMenuContent,
+		DropdownMenuItem, DropdownMenuSeparator,
+		DropdownMenuTrigger
+	} from "$lib/components/ui/dropdown-menu";
+	import {
+		SidebarGroup,
+		SidebarGroupLabel,
+		SidebarMenu, SidebarMenuAction,
+		SidebarMenuButton,
+		SidebarMenuItem
+	} from "$lib/components/ui/sidebar";
 	import { useSidebar } from "$lib/components/ui/sidebar/index.js";
-	import EllipsisIcon from "@lucide/svelte/icons/ellipsis";
-	import FolderIcon from "@lucide/svelte/icons/folder";
-	import ShareIcon from "@lucide/svelte/icons/share";
-	import Trash2Icon from "@lucide/svelte/icons/trash-2";
+	import { Ellipsis, Folder, Share, Trash2 } from "@lucide/svelte";
 
 	let {
 		projects,
@@ -22,55 +30,55 @@
 	const sidebar = useSidebar();
 </script>
 
-<Sidebar.Group class="group-data-[collapsible=icon]:hidden">
-	<Sidebar.GroupLabel>Projects</Sidebar.GroupLabel>
-	<Sidebar.Menu>
+<SidebarGroup class="group-data-[collapsible=icon]:hidden">
+	<SidebarGroupLabel>Projects</SidebarGroupLabel>
+	<SidebarMenu>
 		{#each projects as item (item.name)}
-			<Sidebar.MenuItem>
-				<Sidebar.MenuButton>
+			<SidebarMenuItem>
+				<SidebarMenuButton>
 					{#snippet child({ props })}
 						<a href={item.url} {...props}>
 							<item.icon />
 							<span>{item.name}</span>
 						</a>
 					{/snippet}
-				</Sidebar.MenuButton>
-				<DropdownMenu.Root>
-					<DropdownMenu.Trigger>
+				</SidebarMenuButton>
+				<DropdownMenu>
+					<DropdownMenuTrigger>
 						{#snippet child({ props })}
-							<Sidebar.MenuAction showOnHover {...props}>
-								<EllipsisIcon />
+							<SidebarMenuAction showOnHover {...props}>
+								<Ellipsis />
 								<span class="sr-only">More</span>
-							</Sidebar.MenuAction>
+							</SidebarMenuAction>
 						{/snippet}
-					</DropdownMenu.Trigger>
-					<DropdownMenu.Content
+					</DropdownMenuTrigger>
+					<DropdownMenuContent
 						class="w-48"
 						side={sidebar.isMobile ? "bottom" : "right"}
 						align={sidebar.isMobile ? "end" : "start"}
 					>
-						<DropdownMenu.Item>
-							<FolderIcon class="text-muted-foreground" />
+						<DropdownMenuItem>
+							<Folder class="text-muted-foreground" />
 							<span>View Project</span>
-						</DropdownMenu.Item>
-						<DropdownMenu.Item>
-							<ShareIcon class="text-muted-foreground" />
+						</DropdownMenuItem>
+						<DropdownMenuItem>
+							<Share class="text-muted-foreground" />
 							<span>Share Project</span>
-						</DropdownMenu.Item>
-						<DropdownMenu.Separator />
-						<DropdownMenu.Item>
-							<Trash2Icon class="text-muted-foreground" />
+						</DropdownMenuItem>
+						<DropdownMenuSeparator />
+						<DropdownMenuItem>
+							<Trash2 class="text-muted-foreground" />
 							<span>Delete Project</span>
-						</DropdownMenu.Item>
-					</DropdownMenu.Content>
-				</DropdownMenu.Root>
-			</Sidebar.MenuItem>
+						</DropdownMenuItem>
+					</DropdownMenuContent>
+				</DropdownMenu>
+			</SidebarMenuItem>
 		{/each}
-		<Sidebar.MenuItem>
-			<Sidebar.MenuButton>
-				<EllipsisIcon />
+		<SidebarMenuItem>
+			<SidebarMenuButton>
+				<Ellipsis />
 				<span>More</span>
-			</Sidebar.MenuButton>
-		</Sidebar.MenuItem>
-	</Sidebar.Menu>
-</Sidebar.Group>
+			</SidebarMenuButton>
+		</SidebarMenuItem>
+	</SidebarMenu>
+</SidebarGroup>

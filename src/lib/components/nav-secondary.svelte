@@ -1,5 +1,11 @@
 <script lang="ts">
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
+	import {
+		SidebarGroup,
+		SidebarGroupContent,
+		SidebarMenu,
+		SidebarMenuButton,
+		SidebarMenuItem
+	} from "$lib/components/ui/sidebar";
 	import type { Component, ComponentProps } from "svelte";
 
 	let {
@@ -12,24 +18,24 @@
 			url: string;
 			icon: Component;
 		}[];
-	} & ComponentProps<typeof Sidebar.Group> = $props();
+	} & ComponentProps<typeof SidebarGroup> = $props();
 </script>
 
-<Sidebar.Group bind:ref {...restProps}>
-	<Sidebar.GroupContent>
-		<Sidebar.Menu>
+<SidebarGroup bind:ref {...restProps}>
+	<SidebarGroupContent>
+		<SidebarMenu>
 			{#each items as item (item.title)}
-				<Sidebar.MenuItem>
-					<Sidebar.MenuButton size="sm">
+				<SidebarMenuItem>
+					<SidebarMenuButton size="sm">
 						{#snippet child({ props })}
 							<a href={item.url} {...props}>
 								<item.icon />
 								<span>{item.title}</span>
 							</a>
 						{/snippet}
-					</Sidebar.MenuButton>
-				</Sidebar.MenuItem>
+					</SidebarMenuButton>
+				</SidebarMenuItem>
 			{/each}
-		</Sidebar.Menu>
-	</Sidebar.GroupContent>
-</Sidebar.Group>
+		</SidebarMenu>
+	</SidebarGroupContent>
+</SidebarGroup>

@@ -1,7 +1,10 @@
 <script lang="ts">
-	import * as Collapsible from "$lib/components/ui/collapsible/index.js";
-	import * as Sidebar from "$lib/components/ui/sidebar/index.js";
-	import ChevronRightIcon from "@lucide/svelte/icons/chevron-right";
+	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "$lib/components/ui/collapsible";
+	import {
+		SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction,
+		SidebarMenuSub, SidebarMenuSubItem, SidebarMenuSubButton
+	} from "$lib/components/ui/sidebar";
+	import { ChevronRight } from "@lucide/svelte";
 
 	let {
 		items,
@@ -21,48 +24,48 @@
 	} = $props();
 </script>
 
-<Sidebar.Group>
-	<Sidebar.GroupLabel>Platform</Sidebar.GroupLabel>
-	<Sidebar.Menu>
+<SidebarGroup>
+	<SidebarGroupLabel>Platform</SidebarGroupLabel>
+	<SidebarMenu>
 		{#each items as mainItem (mainItem.title)}
-			<Collapsible.Root open={mainItem.isActive}>
+			<Collapsible open={mainItem.isActive}>
 				{#snippet child({ props })}
-					<Sidebar.MenuItem {...props}>
-						<Sidebar.MenuButton tooltipContent={mainItem.title}>
+					<SidebarMenuItem {...props}>
+						<SidebarMenuButton tooltipContent={mainItem.title}>
 							{#snippet child({ props })}
 								<a href={mainItem.url} {...props}>
 									<mainItem.icon />
 									<span>{mainItem.title}</span>
 								</a>
 							{/snippet}
-						</Sidebar.MenuButton>
+						</SidebarMenuButton>
 						{#if mainItem.items?.length}
-							<Collapsible.Trigger>
+							<CollapsibleTrigger>
 								{#snippet child({ props })}
-									<Sidebar.MenuAction
+									<SidebarMenuAction
 										{...props}
 										class="data-[state=open]:rotate-90"
 									>
-										<ChevronRightIcon />
+										<ChevronRight />
 										<span class="sr-only">Toggle</span>
-									</Sidebar.MenuAction>
+									</SidebarMenuAction>
 								{/snippet}
-							</Collapsible.Trigger>
-							<Collapsible.Content>
-								<Sidebar.MenuSub>
+							</CollapsibleTrigger>
+							<CollapsibleContent>
+								<SidebarMenuSub>
 									{#each mainItem.items as subItem (subItem.title)}
-										<Sidebar.MenuSubItem>
-											<Sidebar.MenuSubButton href={subItem.url}>
+										<SidebarMenuSubItem>
+											<SidebarMenuSubButton href={subItem.url}>
 												<span>{subItem.title}</span>
-											</Sidebar.MenuSubButton>
-										</Sidebar.MenuSubItem>
+											</SidebarMenuSubButton>
+										</SidebarMenuSubItem>
 									{/each}
-								</Sidebar.MenuSub>
-							</Collapsible.Content>
+								</SidebarMenuSub>
+							</CollapsibleContent>
 						{/if}
-					</Sidebar.MenuItem>
+					</SidebarMenuItem>
 				{/snippet}
-			</Collapsible.Root>
+			</Collapsible>
 		{/each}
-	</Sidebar.Menu>
-</Sidebar.Group>
+	</SidebarMenu>
+</SidebarGroup>
