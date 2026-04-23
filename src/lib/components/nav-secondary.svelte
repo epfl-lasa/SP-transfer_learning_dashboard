@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import {
 		SidebarGroup,
 		SidebarGroupContent,
@@ -19,6 +20,9 @@
 			icon: Component;
 		}[];
 	} & ComponentProps<typeof SidebarGroup> = $props();
+
+	const resolvePath = resolve as (pathname: string) => string;
+	const toResolvedHref = (url: string) => (url.startsWith("/") ? resolvePath(url) : url);
 </script>
 
 <SidebarGroup bind:ref {...restProps}>
@@ -28,7 +32,7 @@
 				<SidebarMenuItem>
 					<SidebarMenuButton size="sm">
 						{#snippet child({ props })}
-							<a href={item.url} {...props}>
+							<a href={toResolvedHref(item.url)} {...props}>
 								<item.icon />
 								<span>{item.title}</span>
 							</a>

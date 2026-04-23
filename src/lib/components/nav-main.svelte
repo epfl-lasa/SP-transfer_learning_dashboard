@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "$lib/components/ui/collapsible";
 	import {
 		SidebarGroup, SidebarGroupLabel, SidebarMenu, SidebarMenuItem, SidebarMenuButton, SidebarMenuAction,
@@ -22,6 +23,9 @@
 			}[];
 		}[];
 	} = $props();
+
+	const resolvePath = resolve as (pathname: string) => string;
+	const toResolvedHref = (url: string) => (url.startsWith("/") ? resolvePath(url) : url);
 </script>
 
 <SidebarGroup>
@@ -40,7 +44,7 @@
 							{#snippet child({ props })}
 								<a
 									{...props}
-									href={mainItem.disabled ? undefined : mainItem.url}
+									href={mainItem.disabled ? undefined : toResolvedHref(mainItem.url)}
 									tabindex={mainItem.disabled ? -1 : undefined}
 								>
 									<Icon />
@@ -67,7 +71,7 @@
 								<SidebarMenuSub>
 									{#each mainItem.items as subItem (subItem.title)}
 										<SidebarMenuSubItem>
-											<SidebarMenuSubButton href={subItem.url}>
+											<SidebarMenuSubButton href={toResolvedHref(subItem.url)}>
 												<span>{subItem.title}</span>
 											</SidebarMenuSubButton>
 										</SidebarMenuSubItem>

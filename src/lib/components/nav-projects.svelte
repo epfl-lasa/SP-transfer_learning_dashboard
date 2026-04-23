@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import {
 		DropdownMenu,
 		DropdownMenuContent,
@@ -28,6 +29,8 @@
 	} = $props();
 
 	const sidebar = useSidebar();
+	const resolvePath = resolve as (pathname: string) => string;
+	const toResolvedHref = (url: string) => (url.startsWith("/") ? resolvePath(url) : url);
 </script>
 
 <SidebarGroup class="group-data-[collapsible=icon]:hidden">
@@ -37,7 +40,7 @@
 			<SidebarMenuItem>
 				<SidebarMenuButton>
 					{#snippet child({ props })}
-						<a href={item.url} {...props}>
+						<a href={toResolvedHref(item.url)} {...props}>
 							<item.icon />
 							<span>{item.name}</span>
 						</a>

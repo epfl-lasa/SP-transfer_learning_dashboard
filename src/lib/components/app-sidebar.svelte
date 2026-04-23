@@ -1,139 +1,79 @@
 <script lang="ts" module>
 	import {
 		ArrowLeftRight,
-		BookOpen, Bot, ChartPie, Frame, LayoutDashboard, LifeBuoy, Map, Search, Send,
+		BookOpen, Bot, LayoutDashboard, Search,
 		TrendingUp, Workflow
 	} from "@lucide/svelte";
 
 	const data = {
-		user: {
-			name: "Daniel",
-			email: "m@example.com",
-			avatar: "/avatars/shadcn.jpg",
-		},
 		navMain: [
 			{
 				title: "Overview",
-				url: "#",
+				url: "/",
 				icon: LayoutDashboard,
 			},
 			{
 				title: "Explore Papers",
-				url: "#",
+				url: "/papers",
 				icon: Search,
 			},
 			{
 				title: "Venues",
-				url: "#",
+				url: "/venues",
 				icon: Bot,
 				items: [
-					{
-						title: "CoRL",
-						url: "#",
-					},
-					{
-						title: "arXiv",
-						url: "#",
-					},
-					{
-						title: "Others",
-						url: "#",
-					},
+					{ title: "CoRL", url: "/venues/corl" },
+					{ title: "arXiv", url: "/venues/arxiv" },
+					{ title: "Others", url: "/venues/others" },
 				],
 			},
 			{
 				title: "Taxonomy",
-				url: "#",
+				url: "/taxonomy",
 				icon: BookOpen,
 				items: [
-					{
-						title: "Introduction to TL",
-						url: "#",
-					},
-					{
-						title: "Transfer Types",
-						url: "#",
-					},
-					{
-						title: "Transfer Domains",
-						url: "#",
-					},
-					{
-						title: "Transfer Modes",
-						url: "#",
-					},
-					{
-						title: "Methods and Applications",
-						url: "#",
-					},
-					{
-						title: "Quality Assessment",
-						url: "#",
-					},
+					{ title: "Introduction to TL", url: "/taxonomy#introduction" },
+					{ title: "Transfer Types", url: "/taxonomy#transfer-types" },
+					{ title: "Transfer Domains", url: "/taxonomy#transfer-domains" },
+					{ title: "Transfer Modes", url: "/taxonomy#transfer-modes" },
+					{ title: "Methods and Applications", url: "/taxonomy#methods" },
+					{ title: "Quality Assessment", url: "/taxonomy#quality" },
 				],
 			},
 			{
 				title: "Trends",
-				url: "#",
+				url: "/trends",
 				icon: TrendingUp,
 			},
 			{
 				title: "Compare",
-				url: "#",
+				url: "/compare",
 				icon: ArrowLeftRight,
 				isActive: false,
 				disabled: true,
 			},
 			{
 				title: "Pipeline",
-				url: "#",
+				url: "/pipeline",
 				icon: Workflow,
 				isActive: false,
 				disabled: true,
-			},
-		],
-		navSecondary: [
-			{
-				title: "Support",
-				url: "#",
-				icon: LifeBuoy,
-			},
-			{
-				title: "Feedback",
-				url: "#",
-				icon: Send,
-			},
-		],
-		projects: [
-			{
-				name: "Design Engineering",
-				url: "#",
-				icon: Frame,
-			},
-			{
-				name: "Sales & Marketing",
-				url: "#",
-				icon: ChartPie,
-			},
-			{
-				name: "Travel",
-				url: "#",
-				icon: Map,
 			},
 		],
 	};
 </script>
 
 <script lang="ts">
+	import { resolve } from "$app/paths";
 	import NavMain from "./nav-main.svelte";
-	import NavUser from "./nav-user.svelte";
 	import {
 		Sidebar,
-		SidebarContent, SidebarFooter,
+		SidebarContent,
+		SidebarFooter,
 		SidebarHeader,
 		SidebarMenu,
 		SidebarMenuButton,
-		SidebarMenuItem
+		SidebarMenuItem,
 	} from "$lib/components/ui/sidebar";
 	import { Command } from "@lucide/svelte";
 	import type { ComponentProps } from "svelte";
@@ -147,15 +87,15 @@
 			<SidebarMenuItem>
 				<SidebarMenuButton size="lg">
 					{#snippet child({ props })}
-						<a href="##" {...props}>
+						<a {...props} href={resolve("/")}>
 							<div
-								class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
+									class="bg-sidebar-primary text-sidebar-primary-foreground flex aspect-square size-8 items-center justify-center rounded-lg"
 							>
 								<Command class="size-4" />
 							</div>
 							<div class="grid flex-1 text-start text-sm leading-tight">
-								<span class="truncate font-medium">Acme Inc</span>
-								<span class="truncate text-xs">Enterprise</span>
+								<span class="truncate font-medium">TL Robotics</span>
+								<span class="truncate text-xs">LASA · EPFL</span>
 							</div>
 						</a>
 					{/snippet}
@@ -165,12 +105,7 @@
 	</SidebarHeader>
 	<SidebarContent>
 		<NavMain items={data.navMain} />
-		<!--
-		<NavProjects projects={data.projects} />
-		<NavSecondary items={data.navSecondary} class="mt-auto" />
-		-->
 	</SidebarContent>
 	<SidebarFooter>
-		<NavUser user={data.user} />
 	</SidebarFooter>
 </Sidebar>
